@@ -20,7 +20,7 @@ describe('UniswapV2ERC20', () => {
   const provider = new MockProvider({
     ganacheOptions: {
       chain: {
-        hardfork: 'istanbul',
+        hardfork: 'london',
         chainId: 1
       },
     }
