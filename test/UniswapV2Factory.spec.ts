@@ -18,7 +18,8 @@ describe('UniswapV2Factory', () => {
   const provider = new MockProvider({
     ganacheOptions: {
       chain: {
-        hardfork: 'istanbul'
+        hardfork: 'istanbul',
+        chainId: 1
       },
     }
   })
