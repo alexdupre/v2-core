@@ -1,7 +1,9 @@
 import chai, { expect } from 'chai'
-import { Contract } from 'ethers'
-import { MaxUint256 } from 'ethers/constants'
-import { bigNumberify, hexlify, keccak256, defaultAbiCoder, toUtf8Bytes } from 'ethers/utils'
+import { BigNumber, Contract, constants } from 'ethers'
+import { defaultAbiCoder } from '@ethersproject/abi'
+import { keccak256 } from '@ethersproject/keccak256'
+import { hexlify } from '@ethersproject/bytes'
+import { toUtf8Bytes } from '@ethersproject/strings'
 import { solidity, MockProvider, deployContract } from 'ethereum-waffle'
 import { ecsign } from 'ethereumjs-util'
 
@@ -16,9 +18,11 @@ const TEST_AMOUNT = expandTo18Decimals(10)
 
 describe('UniswapV2ERC20', () => {
   const provider = new MockProvider({
-    hardfork: 'istanbul',
-    mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
-    gasLimit: 9999999
+    ganacheOptions: {
+      hardfork: 'istanbul',
+      mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
+      gasLimit: 9999999
+    }
   })
   const [wallet, other] = provider.getWallets()
 
@@ -86,18 +90,18 @@ describe('UniswapV2ERC20', () => {
   })
 
   it('transferFrom:max', async () => {
-    await token.approve(other.address, MaxUint256)
+    await token.approve(other.address, constants.MaxUint256)
     await expect(token.connect(other).transferFrom(wallet.address, other.address, TEST_AMOUNT))
       .to.emit(token, 'Transfer')
       .withArgs(wallet.address, other.address, TEST_AMOUNT)
-    expect(await token.allowance(wallet.address, other.address)).to.eq(MaxUint256)
+    expect(await token.allowance(wallet.address, other.address)).to.eq(constants.MaxUint256)
     expect(await token.balanceOf(wallet.address)).to.eq(TOTAL_SUPPLY.sub(TEST_AMOUNT))
     expect(await token.balanceOf(other.address)).to.eq(TEST_AMOUNT)
   })
 
   it('permit', async () => {
     const nonce = await token.nonces(wallet.address)
-    const deadline = MaxUint256
+    const deadline = constants.MaxUint256
     const digest = await getApprovalDigest(
       token,
       { owner: wallet.address, spender: other.address, value: TEST_AMOUNT },
@@ -111,6 +115,6 @@ describe('UniswapV2ERC20', () => {
       .to.emit(token, 'Approval')
       .withArgs(wallet.address, other.address, TEST_AMOUNT)
     expect(await token.allowance(wallet.address, other.address)).to.eq(TEST_AMOUNT)
-    expect(await token.nonces(wallet.address)).to.eq(bigNumberify(1))
+    expect(await token.nonces(wallet.address)).to.eq(BigNumber.from(1))
   })
 })
