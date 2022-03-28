@@ -17,9 +17,15 @@ const TEST_ADDRESSES: [string, string] = [
 describe('UniswapV2Factory', () => {
   const provider = new MockProvider({
     ganacheOptions: {
-      hardfork: 'istanbul',
-      mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn',
-      gasLimit: 9999999
+      chain: {
+        hardfork: 'istanbul'
+      },
+      wallet: {
+        mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn'
+      },
+      miner: {
+        blockGasLimit: 9999999
+      }
     }
   })
   const [wallet, other] = provider.getWallets()
