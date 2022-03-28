@@ -19,9 +19,6 @@ describe('UniswapV2Pair', () => {
       chain: {
         hardfork: 'istanbul'
       },
-      wallet: {
-        mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn'
-      },
       miner: {
         blockGasLimit: 9999999
       }

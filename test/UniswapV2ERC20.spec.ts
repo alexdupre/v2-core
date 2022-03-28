@@ -22,9 +22,6 @@ describe('UniswapV2ERC20', () => {
       chain: {
         hardfork: 'istanbul'
       },
-      wallet: {
-        mnemonic: 'horn horn horn horn horn horn horn horn horn horn horn horn'
-      },
       miner: {
         blockGasLimit: 9999999
       }
