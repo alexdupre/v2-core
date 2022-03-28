@@ -22,9 +22,6 @@ describe('UniswapV2ERC20', () => {
       chain: {
         hardfork: 'istanbul'
       },
-      miner: {
-        blockGasLimit: 9999999
-      }
     }
   })
   const [wallet, other] = provider.getWallets()

@@ -19,9 +19,6 @@ describe('UniswapV2Pair', () => {
       chain: {
         hardfork: 'istanbul'
       },
-      miner: {
-        blockGasLimit: 9999999
-      }
     }
   })
   const [wallet, other] = provider.getWallets()
