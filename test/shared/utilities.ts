@@ -74,7 +74,12 @@ export async function getApprovalDigest(
   )
 }
 
+export async function setTime(provider: providers.Web3Provider, timestamp: number): Promise<any> {
+  return provider.send('evm_setTime', [timestamp * 1000])
+}
+
 export async function mineBlock(provider: providers.Web3Provider, timestamp: number): Promise<any> {
+  await setTime(provider, timestamp)
   return provider.send('evm_mine', [timestamp])
 }
 
